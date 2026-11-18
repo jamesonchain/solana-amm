@@ -6,6 +6,7 @@ pub mod state;
 use anchor_lang::prelude::*;
 
 pub use constants::*;
+pub use error::*;
 pub use instructions::*;
 pub use state::*;
 
@@ -15,11 +16,16 @@ declare_id!("93udxGjKRxgszietSgakLG5d55wqihCJ8mav2tDquaDL");
 pub mod amm {
     use super::*;
 
-    pub fn initialize(ctx: Context<Initialize>) -> Result<()> {
-        crate::instructions::initialize::handle_initialize(ctx)
+    pub fn initialize(ctx: Context<Initialize>, fee_bps: u16) -> Result<()> {
+        crate::instructions::initialize::handle_initialize(ctx, fee_bps)
     }
 
-    pub fn increment(ctx: Context<Increment>) -> Result<()> {
-        crate::instructions::increment::handle_increment(ctx)
+    pub fn deposit(
+        ctx: Context<Deposit>,
+        amount_a: u64,
+        amount_b: u64,
+        min_lp_out: u64,
+    ) -> Result<()> {
+        crate::instructions::deposit::handle_deposit(ctx, amount_a, amount_b, min_lp_out)
     }
 }
