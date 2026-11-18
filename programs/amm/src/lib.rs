@@ -28,4 +28,22 @@ pub mod amm {
     ) -> Result<()> {
         crate::instructions::deposit::handle_deposit(ctx, amount_a, amount_b, min_lp_out)
     }
+
+    pub fn withdraw(
+        ctx: Context<Withdraw>,
+        amount_lp: u64,
+        min_a_out: u64,
+        min_b_out: u64,
+    ) -> Result<()> {
+        crate::instructions::withdraw::handle_withdraw(ctx, amount_lp, min_a_out, min_b_out)
+    }
+
+    pub fn swap(
+        ctx: Context<Swap>,
+        amount_in: u64,
+        min_amount_out: u64,
+        a_to_b: bool,
+    ) -> Result<()> {
+        crate::instructions::swap::handle_swap(ctx, amount_in, min_amount_out, a_to_b)
+    }
 }
